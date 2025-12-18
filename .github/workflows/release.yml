@@ -82,7 +82,7 @@ jobs:
       - name: Verify build
         run: |
           ls -lh dist/
-          if [ ! -f dist/adr-*.whl ]; then
+          if [ ! -f dist/dark_madr-*.whl ]; then
             echo "Build failed: wheel not found"
             exit 1
           fi
@@ -117,7 +117,7 @@ jobs:
 
       - name: Install package
         run: |
-          pip install dist/adr-*.whl
+          pip install dist/dark_madr-*.whl
           adr --help
           echo "Package installed successfully"
 
@@ -179,7 +179,7 @@ jobs:
           ## Installation
 
           \`\`\`bash
-          pip install adr==${{ steps.get_version.outputs.version }}
+          pip install dark-madr==${{ steps.get_version.outputs.version }}
           \`\`\`
 
           ## Documentation
@@ -193,7 +193,7 @@ jobs:
           ## Installation
 
           \`\`\`bash
-          pip install adr==${{ steps.get_version.outputs.version }}
+          pip install dark-madr==${{ steps.get_version.outputs.version }}
           \`\`\`
 
           ## Documentation
@@ -239,7 +239,7 @@ jobs:
           echo "GitHub Release: ${{ needs.create-github-release.result }}"
           echo ""
           echo "Package available at:"
-          echo "   - PyPI: https://pypi.org/project/adr/${{ steps.get_version.outputs.version }}/"
+          echo "   - PyPI: https://pypi.org/project/dark-madr/${{ steps.get_version.outputs.version }}/"
           echo "   - GitHub Release: https://github.com/m1yag1/adr.py/releases/tag/v${{ steps.get_version.outputs.version }}"
 
       - name: Failure summary

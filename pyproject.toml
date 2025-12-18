@@ -3,7 +3,7 @@ requires = ["hatchling"]
 build-backend = "hatchling.build"
 
 [project]
-name = "adr"
+name = "dark-madr"
 dynamic = ["version"]
 description = "Architecture Decision Records management tool"
 readme = "README.md"
@@ -12,7 +12,7 @@ license = "MIT"
 authors = [
     { name = "m1yag1" },
 ]
-keywords = ["architecture", "decision", "records", "adr", "documentation"]
+keywords = ["architecture", "decision", "records", "adr", "madr", "documentation"]
 classifiers = [
     "Development Status :: 4 - Beta",
     "Intended Audience :: Developers",
@@ -51,9 +51,9 @@ docs = [
 adr = "adr.cli:main"
 
 [project.urls]
-Documentation = "https://github.com/m1yag1/adr/blob/main/README.md"
-Issues = "https://github.com/m1yag1/adr/issues"
-Source = "https://github.com/m1yag1/adr"
+Documentation = "https://github.com/m1yag1/adr.py/blob/main/README.md"
+Issues = "https://github.com/m1yag1/adr.py/issues"
+Source = "https://github.com/m1yag1/adr.py"
 
 [tool.hatch.version]
 path = "src/adr/__init__.py"

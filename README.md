@@ -1,4 +1,4 @@
-# adr.py
+# dark-madr
 
 A Python CLI for managing [Architecture Decision Records](https://cognitect.com/blog/2011/11/15/documenting-architecture-decisions).
 
@@ -7,6 +7,12 @@ Compatible with [adr-tools](https://github.com/npryce/adr-tools) workflow. Suppo
 For background on ADRs, see the included paper: [Using ADR on GitHub](assets/Using.ADR.GitHub.pdf)
 
 ## Installation
+
+```bash
+pip install dark-madr
+```
+
+For development:
 
 ```bash
 uv sync

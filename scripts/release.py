@@ -2,8 +2,9 @@
 """Complete the release by committing, tagging, and pushing.
 
 Usage:
-    python scripts/release.py           # Interactive mode
-    python scripts/release.py --commit  # Non-interactive mode
+    python scripts/release.py                    # Interactive mode
+    python scripts/release.py --yes              # Non-interactive mode (skip prompts)
+    python scripts/release.py --yes --skip-tests # Skip prompts and tests
 """
 
 from __future__ import annotations
@@ -62,9 +63,9 @@ def check_working_directory() -> bool:
 
 def run_tests() -> bool:
     """Run tests to verify the release."""
-    print("Running tests...")
+    print("Running tests via tox...")
     result = subprocess.run(
-        ["python", "-m", "pytest", "tests/", "-v", "--tb=short"],
+        ["tox", "-e", "py312"],
         capture_output=False,
         check=False,
     )
@@ -74,10 +75,18 @@ def run_tests() -> bool:
 def create_commit(version: str) -> None:
     """Create release commit."""
     subprocess.run(["git", "add", "."], check=True)
-    subprocess.run(
+    result = subprocess.run(
         ["git", "commit", "-m", f"chore(release): prepare for {version}"],
-        check=True,
+        check=False,
     )
+    # If commit failed (likely pre-commit modified files), retry once
+    if result.returncode != 0:
+        print("Commit failed, retrying after pre-commit fixes...")
+        subprocess.run(["git", "add", "."], check=True)
+        subprocess.run(
+            ["git", "commit", "-m", f"chore(release): prepare for {version}"],
+            check=True,
+        )
     print(f"Created commit for version {version}")
 
 
@@ -107,10 +116,11 @@ def main() -> None:
     if not check_working_directory():
         sys.exit(1)
 
-    # Check for --commit flag
-    auto_commit = "--commit" in sys.argv
+    # Check for flags
+    auto_confirm = "--yes" in sys.argv or "-y" in sys.argv
+    skip_tests = "--skip-tests" in sys.argv
 
-    if not auto_commit:
+    if not auto_confirm:
         print("\nThe following actions will be performed:")
         print(f"  1. Create commit: 'chore(release): prepare for {version}'")
         print(f"  2. Create tag: v{version}")
@@ -121,20 +131,18 @@ def main() -> None:
             print("Aborted.")
             sys.exit(0)
 
-    # Run tests
-    if not run_tests():
-        print("Tests failed. Aborting release.")
-        sys.exit(1)
+    # Run tests unless skipped
+    if not skip_tests:
+        if not run_tests():
+            print("Tests failed. Aborting release.")
+            print("Use --skip-tests to bypass (CI will validate)")
+            sys.exit(1)
+    else:
+        print("Skipping tests (CI will validate)")
 
     # Create commit and tag
     create_commit(version)
     create_tag(version)
-
-    if not auto_commit:
-        response = input("\nPush to remote? [y/N] ")
-        if response.lower() != "y":
-            print("Changes committed locally. Push manually when ready.")
-            sys.exit(0)
 
     # Push
     push_changes()

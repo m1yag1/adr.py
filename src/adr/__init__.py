@@ -1,6 +1,6 @@
 """ADR - Architecture Decision Records management tool."""
 
-__version__ = "0.1.0"
+__version__ = "0.1.2"
 __author__ = "m1yag1"
 __email__ = "730430+m1yag1@users.noreply.github.com"
 

@@ -5,33 +5,17 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased]
+## [0.1.2] - 2025-12-18
 
 ### Added
-- Initial release of ADR (Architecture Decision Records) management tool
-- CLI commands: `init`, `new`, `list`, `show`, `generate toc`, `templates`, `help-template`, `config`, `init-config`
-- Support for multiple templates: Nygard (classic) and MADR formats
-- Configuration via `pyproject.toml` `[tool.adr]` section
-- Domain model with Pydantic for ADR metadata validation
-- File-based repository for ADR storage
-- Rich terminal output with syntax highlighting
-- Template engine using Jinja2
-- Supersession support for ADR lifecycle management
-- Table of contents generation
+
+- Add GitHub Actions CI and release workflows
+- Rename package to dark-madr for PyPI
 
 ### Changed
-- N/A
 
-### Fixed
-- N/A
+- Use uv for build and publish instead of twine
 
-## [0.1.0] - 2024-01-01
+### Miscellaneous Tasks
 
-### Added
-- Initial project structure
-- Basic ADR management functionality
-- CLI interface with Click
-- Template system with Jinja2
-- Rich console output
-- Configuration management
-- Test suite with pytest
+- Update URLs after repo rename to dark-madr
